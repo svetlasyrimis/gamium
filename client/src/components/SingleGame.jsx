@@ -38,7 +38,7 @@ export default class SingleGame extends Component {
   }
 
   setCurrentGame = async () => {
-    const response = await axios.get(`http://localhost:3000/games/${this.props.gameId}`)
+    const response = await axios.get(`https://intense-woodland-83144.herokuapp.com/games/${this.props.gameId}`)
     const currentGame = response.data
     this.setState({
       currentGame
