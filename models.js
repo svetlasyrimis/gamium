@@ -1,5 +1,7 @@
-let sequelize;
+const Sequelize = require('sequelize');
 
+
+let sequelize;
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
@@ -9,56 +11,57 @@ if (process.env.DATABASE_URL) {
   });
 } else {
   sequelize = new Sequelize({
-    database: 'games_db',
+    database: 'characters_db',
     dialect: 'postgres',
     define: {
-      underscored: true
-    }
+      underscored: true,
+    },
   });
 }
-  class User extends Sequelize.Model { };
 
-  User.init({
-    username: Sequelize.STRING,
-    password_digest: Sequelize.STRING
-  }, {
-    sequelize,
-    modelName: 'user'
-  });
+class User extends Sequelize.Model { };
 
-  class Game extends Sequelize.Model { };
+User.init({
+  username: Sequelize.STRING,
+  password_digest: Sequelize.STRING
+}, {
+  sequelize,
+  modelName: 'user'
+});
 
-  Game.init({
-    name: Sequelize.STRING,
-    image_url: Sequelize.TEXT,
-    description: Sequelize.TEXT,
-  }, {
-    sequelize,
-    modelName: 'game'
-  });
+class Game extends Sequelize.Model { };
 
-  class Review extends Sequelize.Model { };
+Game.init({
+  name: Sequelize.STRING,
+  image_url: Sequelize.TEXT,
+  description: Sequelize.TEXT,
+}, {
+  sequelize,
+  modelName: 'game'
+});
 
-  Review.init({
-    review: Sequelize.TEXT(500)
-  }, {
-    sequelize,
-    modelName: 'review'
-  });
+class Review extends Sequelize.Model { };
 
-  User.hasMany(Game, { onDelete: 'cascade' });
-  Game.belongsTo(User);
+Review.init({
+  review: Sequelize.TEXT(500)
+}, {
+  sequelize,
+  modelName: 'review'
+});
 
-  User.hasMany(Review, { onDelete: 'cascade' })
-  Review.belongsTo(User);
+User.hasMany(Game, { onDelete: 'cascade' });
+Game.belongsTo(User);
 
-  Game.hasMany(Review, { onDelete: 'cascade' })
-  Review.belongsTo(Game);
+User.hasMany(Review, { onDelete: 'cascade' })
+Review.belongsTo(User);
 
-  module.exports = {
-    Game,
-    User,
-    Review,
-    sequelize
-  }
+Game.hasMany(Review, { onDelete: 'cascade' })
+Review.belongsTo(Game);
+
+module.exports = {
+  Game,
+  User,
+  Review,
+  sequelize
+}
 
