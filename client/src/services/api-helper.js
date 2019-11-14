@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://git.heroku.com/intense-woodland-83144.git'
+  baseURL: 'https://intense-woodland-83144.herokuapp.com/'
 })
 
 
